@@ -18,9 +18,12 @@ def eval_func_meshgrid_2D(x2d,y2d):
 
     #v2d = eval(func + f"({x2d}" + "," + f"{y2d})") #dynamic call
     
-    v2d = harm2d(x2d,y2d)
+    v2d = tanh2d(x2d,y2d)
     return v2d
 
     """ --------- EXAMPLE ANALYTIC FUNCTIONS ------------"""
 def harm2d(x,y):
     return np.sin(x)*np.cos(y)
+
+def tanh2d(x,y):
+    return np.tanh(x*y)

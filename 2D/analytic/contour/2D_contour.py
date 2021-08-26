@@ -28,13 +28,6 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
         x2d: np.array of size (nptsx,nptsy): x-coordinates of each point in the rectangular grid
         y2d: np.array of size (nptsx,nptsy): y-coordinates of each point in the rectangular grid
         v2d: array of size (nptsx,nptsy): function values at each point of the rectangular grid
-        xrange,yrange: tuple (xmin,xmax): x,y-range for the plot
-        vmin,vmax: float : value range for the plot
-        ncont:      int: number of contours
-
-
-        kwargs:
-
     Comments:
         1)
 
@@ -118,6 +111,9 @@ if __name__ == "__main__":
     function = "harm2d"
 
     """" ===== Plot parameters ====="""
+    #xrange,yrange: tuple (xmin,xmax): x,y-range for the plot
+    #vmin,vmax: float : value range for the plot
+    #ncont:      int: number of contours
     nptsx = 200
     nptsy = 200
 
