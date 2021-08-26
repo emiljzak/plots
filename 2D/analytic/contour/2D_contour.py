@@ -1,6 +1,7 @@
 from posixpath import dirname
 from h5py._hl.selections import PointSelection
 import matplotlib
+from numba.core import extending
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -93,7 +94,7 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
                     shrink              = cont2D_params['cbar_shrink'],
                     pad                 = cont2D_params['cbar_pad'],
                     panchor             = cont2D_params['cbar_panchor'],
-                    
+                    extend              = cont2D_params['cbar_extend'],
                     ticks               = cont2D_params['cbar_ticks'],
                     drawedges           = cont2D_params['cbar_drawedges'],
                     format              = cont2D_params['cbar_format'])
@@ -171,14 +172,14 @@ if __name__ == "__main__":
                         "cbar_fraction":      1.0, #fraction of the original axes to be displayed in the colorbar
                         "cbar_aspect":        20, #ratio of long to short dimensions
                         "cbar_shrink":        1.00, #shrink the colorbar
-                        "cbar_pad":           0.15, #distance of colorbar from the adjacent plot axis
+                        "cbar_pad":           0.05, #distance of colorbar from the adjacent plot axis
                         "cbar_panchor":       (0.3,0.2), #TThe anchor point of the colorbar parent axes. If False, the parent axes' anchor will be unchanged. Defaults to (1.0, 0.5) if vertical; (0.5, 0.0) if horizontal.
                         
                         "cbar_ticks":         None, #or list of custom ticks: list(np.linspace(vmin,vmax,10))
                         "cbar_drawedges":     False, #draw edges of colorbar
                         "cbar_label":         "some title", #title on long axis of colorbar
-                        "cbar_format":         '%.1f', #format of tick labels
-
+                        "cbar_format":        '%.1f', #format of tick labels
+                        "cbar_extend":        "neither", #{'neither', 'both', 'min', 'max'} If not 'neither', make pointed end(s) for out-of- range values. These are set for a given colormap using the colormap set_under and set_over methods.
 
                         ### SAVE PROPERTIES ###       
                         "save":             True,
