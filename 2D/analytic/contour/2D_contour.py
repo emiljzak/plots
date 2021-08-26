@@ -7,6 +7,8 @@ from matplotlib.ticker import FormatStrFormatter
 import os
 import sys
 
+from sympy.polys.densebasic import dmp_include
+
 main_folder = "/Users/zakemil/Nextcloud/projects/plot"
 
 sys.path.append(main_folder)
@@ -49,7 +51,7 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
                                 vmin = cont2D_params['vmin'],
                                 vmax = cont2D_params['vmax'])
     
-    ax1.set_title(  cont2D_params['title_text'],
+    ax1.set_title(  label               = cont2D_params['title_text'],
                     fontsize            = cont2D_params['title_size'],
                     color               = cont2D_params['title_color'],
                     verticalalignment   = cont2D_params['title_vertical'],
@@ -57,9 +59,15 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
                     #position            = cont2D_params[ "title_position"],
                     pad                 = cont2D_params['title_pad'],
                     backgroundcolor     = cont2D_params['title_background'],
+                    fontname            = cont2D_params['title_fontname'],
                     fontstyle           = cont2D_params['title_fontstyle'])
 
-    ax1.set_xlabel(cont2D_params['xlabel'])
+    ax1.set_xlabel( xlabel              = cont2D_params['xlabel'],
+                    fontsize            = cont2D_params['xlabel_size'],
+                    color               = cont2D_params['label_color'],
+                    loc                 = cont2D_params['label_loc'],
+                    labelpad            = cont2D_params['xlabel_pad'] )
+
     ax1.set_ylabel(cont2D_params['ylabel'])
 
  
@@ -75,8 +83,15 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
     ax1.legend()
 
     if cont2D_params['save'] == True:
-        fig.savefig("2d_cont_cart_analytic.pdf" ,\
-                    bbox_inches='tight')
+        fig.savefig(    fname       = cont2D_params['save_name'],
+                        dpi         = cont2D_params['save_dpi'],
+                        quality     = cont2D_params['save_quality'],
+                        orientation = cont2D_params['save_orientation'],
+                        bbox_inches = cont2D_params['save_bbox_inches'],
+                        pad_inches  = cont2D_params['save_pad_inches'],
+                        format      = cont2D_params['save_format'],
+                        )
+
     plt.legend()
     plt.show()
     plt.close()
@@ -115,17 +130,31 @@ if __name__ == "__main__":
                         #"title_position":   (pos_x,pos_y), #manual setting of title position
                         "title_pad":        None, #offset from the top of the axes given in points 
                         "title_fontstyle":  'normal', #{'normal', 'italic', 'oblique'}
-                        "title_background": "None",          
+                        "title_fontname":   'Helvetica', #'Sans' | 'Courier' | '
+                        "title_background": "None",   
+
                         ### LABELS ###
                         "xlabel":           "x",
                         "ylabel":           "y",
                         "xlabel_format":    '%.2f',
                         "ylabel_format":    '%.1f',
+                        "label_color":      'red',
+                        "xlabel_size":       12,
+                        "ylabel_size":       12,   
+                        "xlabel_pad":       None,     
+                        "ylabel_pad":       None,          
                         "xticks":           list(np.linspace(xrange[0],xrange[1],4)),
                         "yticks":           list(np.linspace(yrange[0],yrange[1],8)), 
 
                         ### SAVE PROPERTIES ###       
-                        "save":             False,
+                        "save":             True,
+                        "save_dpi":         'figure', #float or 'figure' for same resolution as figure
+                        "save_quality":     95, #1-95
+                        "save_orientation": 'landscape', #portrait
+                        "save_format":      'pdf',
+                        "save_bbox_inches": 'tight', #or float in inches - which portion of the figure to save?
+                        "save_pad_inches":  'tight',
+
 
                         ### FIGURE PROPERTIES ###    
                         "figsize_x":        3.5,
