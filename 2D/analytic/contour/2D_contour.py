@@ -7,8 +7,11 @@ import matplotlib.gridspec as gridspec
 from matplotlib.ticker import FormatStrFormatter
 import os
 import sys
+from numpy.core.overrides import array_function_from_dispatcher
+from numpy.lib.arraypad import pad
 
 from sympy.polys.densebasic import dmp_include
+from sympy.simplify.radsimp import fraction
 
 main_folder = "/Users/zakemil/Nextcloud/projects/plot"
 
@@ -84,7 +87,12 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
     fig.colorbar(   mappable            = cont2D_params['cbar_mappable'],
                     ax                  = ax1, 
                     orientation         = cont2D_params['cbar_orientation'],
-                    label               = cont2D_params['cbar_label'])
+                    label               = cont2D_params['cbar_label'],
+                    fraction            = cont2D_params['cbar_fraction'],
+                    aspect              = cont2D_params['cbar_aspect'],
+                    shrink              = cont2D_params['cbar_shrink'],
+                    pad                 = cont2D_params['cbar_pad'],
+                    panchor             = cont2D_params['cbar_panchor']    )
 
     if cont2D_params['save'] == True:
         fig.savefig(    fname       = cont2D_params['save_name'],
@@ -108,14 +116,14 @@ if __name__ == "__main__":
     nptsx = 200
     nptsy = 200
 
-    xmax = 5.0
-    ymax = 5.0
-    xrange = (-xmax, xmax)
-    yrange = (-ymax, ymax)
+    xmax    = 5.0
+    ymax    = 5.0
+    xrange  = (-xmax, xmax)
+    yrange  = (-ymax, ymax)
 
-    vmin = -1.0
-    vmax = 1.0
-    ncont = 100
+    vmin    = -1.0
+    vmax    = 1.0
+    ncont   = 100
 
     cmap = matplotlib.cm.jet #jet, cool, etc
     norm = matplotlib.colors.Normalize(vmin=vmin, vmax=vmax)
@@ -154,16 +162,21 @@ if __name__ == "__main__":
 
                         ### COLORBAR ###
                         "cbar_mappable":       matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap),
-                        "cbar_orientation":   'horizontal', #vertical
+                        "cbar_orientation":   'horizontal', #vertical #note that orientation overrides panchor
                         "cbar_label":         "Some units",   
-
+                        "cbar_fraction":      1.0, #fraction of the original axes to be displayed in the colorbar
+                        "cbar_aspect":        20, #ratio of long to short dimensions
+                        "cbar_shrink":        1.00, #shrink the colorbar
+                        "cbar_pad":           0.15, #distance of colorbar from the adjacent plot axis
+                        "cbar_panchor":       (0.3,0.2), #TThe anchor point of the colorbar parent axes. If False, the parent axes' anchor will be unchanged. Defaults to (1.0, 0.5) if vertical; (0.5, 0.0) if horizontal.
+                        
                         ### SAVE PROPERTIES ###       
                         "save":             True,
                         "save_name":        "cont2D.pdf",
                         "save_dpi":         'figure', #float or 'figure' for same resolution as figure
                         "save_orientation": 'landscape', #portrait
                         "save_bbox_inches": 'tight', #or float in inches - which portion of the figure to save?
-                        "save_pad_inches":  0.1,
+                        "save_pad_inches":   0.1,
 
 
                         ### FIGURE PROPERTIES ###    
