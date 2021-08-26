@@ -1,5 +1,6 @@
 from posixpath import dirname
 from h5py._hl.selections import PointSelection
+import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -80,16 +81,17 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
     ax1.xaxis.set_major_formatter(FormatStrFormatter(cont2D_params['xlabel_format'])) #set tick label formatter 
     ax1.yaxis.set_major_formatter(FormatStrFormatter(cont2D_params['ylabel_format']))
 
-    ax1.legend()
+    fig.colorbar(   mappable            = cont2D_params['cbar_mappable'],
+                    ax                  = ax1, 
+                    orientation         = cont2D_params['cbar_orientation'],
+                    label               = cont2D_params['cbar_label'])
 
     if cont2D_params['save'] == True:
         fig.savefig(    fname       = cont2D_params['save_name'],
                         dpi         = cont2D_params['save_dpi'],
-                        quality     = cont2D_params['save_quality'],
                         orientation = cont2D_params['save_orientation'],
-                        #bbox_inches = cont2D_params['save_bbox_inches'],
-                        #pad_inches  = cont2D_params['save_pad_inches'],
-                        format      = cont2D_params['save_format'],
+                        bbox_inches = cont2D_params['save_bbox_inches'],
+                        pad_inches  = cont2D_params['save_pad_inches']
                         )
 
     plt.legend()
@@ -114,6 +116,9 @@ if __name__ == "__main__":
     vmin = -1.0
     vmax = 1.0
     ncont = 100
+
+    cmap = matplotlib.cm.jet #jet, cool, etc
+    norm = matplotlib.colors.Normalize(vmin=vmin, vmax=vmax)
 
     cont2D_params = {   "xrange":   xrange,
                         "yrange":   yrange,
@@ -147,15 +152,18 @@ if __name__ == "__main__":
                         "xticks":           list(np.linspace(xrange[0],xrange[1],4)),
                         "yticks":           list(np.linspace(yrange[0],yrange[1],8)), 
 
+                        ### COLORBAR ###
+                        "cbar_mappable":       matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap),
+                        "cbar_orientation":   'horizontal', #vertical
+                        "cbar_label":         "Some units",   
+
                         ### SAVE PROPERTIES ###       
                         "save":             True,
-                        "save_name":        "cont2D",
+                        "save_name":        "cont2D.pdf",
                         "save_dpi":         'figure', #float or 'figure' for same resolution as figure
-                        "save_quality":     95, #1-95
                         "save_orientation": 'landscape', #portrait
-                        "save_format":      'pdf',
                         "save_bbox_inches": 'tight', #or float in inches - which portion of the figure to save?
-                        "save_pad_inches":  'tight',
+                        "save_pad_inches":  0.1,
 
 
                         ### FIGURE PROPERTIES ###    
