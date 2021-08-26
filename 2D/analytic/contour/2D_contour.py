@@ -100,7 +100,7 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
                         pad_inches  = cont2D_params['save_pad_inches']
                         )
 
-    plt.legend()
+    #ax1.legend() #show legends
     plt.show()
     plt.close()
 
@@ -109,7 +109,7 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
 if __name__ == "__main__":
 
     func = "tanh2d" #function name to plot
-    
+
     """" ===== Plot parameters ====="""
     #xrange,yrange: tuple (xmin,xmax): x,y-range for the plot
     #vmin,vmax: float : value range for the plot

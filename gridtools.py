@@ -1,8 +1,20 @@
 import numpy as np    
+from scipy.interpolate import SmoothSphereBivariateSpline, griddata,LinearNDInterpolator,NearestNDInterpolator
 
 
 def format_float(x):
    return 0
+
+"""
+Possible cases:
+1) (x, y, z, v) data, where x,y,z span cartesian cube, i.e. regular cartesian grid
+2) (x, y, z, v) data, where x,y,z span arbitrary 2-surface, sphere in particular, i.e. irregular cartesian grid"""
+
+"""To do: compare different interpolators on 2D data in terms of i/o"""
+
+def interp_2D_xyv(x,y,v):
+    dens_interp = NearestNDInterpolator((x,y), v)
+
 
 def gen_meshgrid_2D(xrange,yrange,nptsx,nptsy):
     """
@@ -15,11 +27,9 @@ def gen_meshgrid_2D(xrange,yrange,nptsx,nptsy):
     return x2d,y2d
 
 def eval_func_meshgrid_2D(x2d,y2d,func):
-    #print(func + f"({x2d},{y2d})")
-    #exit()
+
     v2d = eval(func+"(x2d,y2d)") #dynamic call
-    
-    #v2d = tanh2d(x2d,y2d)
+    #v2d = tanh2d(x2d,y2d) #static call
     return v2d
 
     """ --------- EXAMPLE ANALYTIC FUNCTIONS ------------"""
