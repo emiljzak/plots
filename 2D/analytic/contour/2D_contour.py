@@ -1,4 +1,5 @@
 from posixpath import dirname
+from h5py._hl.selections import PointSelection
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -49,8 +50,14 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
                                 vmax = cont2D_params['vmax'])
     
     ax1.set_title(  cont2D_params['title_text'],
-                    fontsize = cont2D_params['title_size'],
-                    color = cont2D_params['title_color'])
+                    fontsize            = cont2D_params['title_size'],
+                    color               = cont2D_params['title_color'],
+                    verticalalignment   = cont2D_params['title_vertical'],
+                    horizontalalignment = cont2D_params['title_horizontal'],
+                    #position            = cont2D_params[ "title_position"],
+                    pad                 = cont2D_params['title_pad'],
+                    backgroundcolor     = cont2D_params['title_background'],
+                    fontstyle           = cont2D_params['title_fontstyle'])
 
     ax1.set_xlabel(cont2D_params['xlabel'])
     ax1.set_ylabel(cont2D_params['ylabel'])
@@ -62,8 +69,8 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
     ax1.set_xticklabels(cont2D_params['xticks'],fontsize=8) #x-ticks labels
     ax1.set_yticklabels(cont2D_params['yticks']) #y-ticks labels
 
-    ax1.xaxis.set_major_formatter(FormatStrFormatter('%.1f')) #set tick label formatter 
-    ax1.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+    ax1.xaxis.set_major_formatter(FormatStrFormatter(cont2D_params['xlabel_format'])) #set tick label formatter 
+    ax1.yaxis.set_major_formatter(FormatStrFormatter(cont2D_params['ylabel_format']))
 
     ax1.legend()
 
@@ -93,31 +100,40 @@ if __name__ == "__main__":
     vmax = 1.0
     ncont = 100
 
-    cont2D_params = {   "xrange": xrange,
-                        "yrange": yrange,
-                        "vmin": vmin,
-                        "vmax": vmax,
-                        "ncont": ncont,
+    cont2D_params = {   "xrange":   xrange,
+                        "yrange":   yrange,
+                        "vmin":     vmin,
+                        "vmax":     vmax,
+                        "ncont":    ncont,
 
                         ### TITLE ###
-                        "title_text": "Title",
-                        "title_color": "b",
-                        "title_size": 15,
-
+                        "title_text":       "Title",
+                        "title_color":      "blue",
+                        "title_size":       15,
+                        "title_vertical":   "baseline", #vertical alignment of the title: {'center', 'top', 'bottom', 'baseline', 'center_baseline'}
+                        "title_horizontal": "center", #{'center', 'left', 'right'},
+                        #"title_position":   (pos_x,pos_y), #manual setting of title position
+                        "title_pad":        None, #offset from the top of the axes given in points 
+                        "title_fontstyle":  'normal', #{'normal', 'italic', 'oblique'}
+                        "title_background": "None",          
                         ### LABELS ###
+                        "xlabel":           "x",
+                        "ylabel":           "y",
+                        "xlabel_format":    '%.2f',
+                        "ylabel_format":    '%.1f',
+                        "xticks":           list(np.linspace(xrange[0],xrange[1],4)),
+                        "yticks":           list(np.linspace(yrange[0],yrange[1],8)), 
 
-                        "xticks": list(np.linspace(xrange[0],xrange[1],4)),
-                        "yticks": list(np.linspace(yrange[0],yrange[1],8)),
-                        "xlabel": "x",
-                        "ylabel": "y",
-                        
                         ### SAVE PROPERTIES ###       
-                        "save": False,
+                        "save":             False,
 
-                        "figsize_x": 3.5,
-                        "figsize_y": 3.5,
-                        "resolution": 200
+                        ### FIGURE PROPERTIES ###    
+                        "figsize_x":        3.5,
+                        "figsize_y":        3.5,
+                        "resolution":       200
                         }
+
+
 
     """" ===== generate function on the grid ====="""
     x2d,y2d = gen_meshgrid_2D(xrange,yrange,nptsx,nptsy)
