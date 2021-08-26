@@ -14,11 +14,12 @@ def gen_meshgrid_2D(xrange,yrange,nptsx,nptsy):
     x2d,y2d = np.meshgrid(x1d,y1d)
     return x2d,y2d
 
-def eval_func_meshgrid_2D(x2d,y2d):
-
-    #v2d = eval(func + f"({x2d}" + "," + f"{y2d})") #dynamic call
+def eval_func_meshgrid_2D(x2d,y2d,func):
+    #print(func + f"({x2d},{y2d})")
+    #exit()
+    v2d = eval(func+"(x2d,y2d)") #dynamic call
     
-    v2d = tanh2d(x2d,y2d)
+    #v2d = tanh2d(x2d,y2d)
     return v2d
 
     """ --------- EXAMPLE ANALYTIC FUNCTIONS ------------"""

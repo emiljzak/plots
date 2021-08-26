@@ -108,8 +108,8 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
 
 if __name__ == "__main__":
 
-    function = "harm2d"
-
+    func = "tanh2d" #function name to plot
+    
     """" ===== Plot parameters ====="""
     #xrange,yrange: tuple (xmin,xmax): x,y-range for the plot
     #vmin,vmax: float : value range for the plot
@@ -195,8 +195,9 @@ if __name__ == "__main__":
 
 
     """" ===== generate function on the grid ====="""
+
     x2d,y2d = gen_meshgrid_2D(xrange,yrange,nptsx,nptsy)
-    v2d     = eval_func_meshgrid_2D(x2d,y2d)
+    v2d     = eval_func_meshgrid_2D(x2d,y2d,func)
 
 
     """" ===== Plot and save ====="""
