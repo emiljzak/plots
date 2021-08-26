@@ -92,7 +92,11 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
                     aspect              = cont2D_params['cbar_aspect'],
                     shrink              = cont2D_params['cbar_shrink'],
                     pad                 = cont2D_params['cbar_pad'],
-                    panchor             = cont2D_params['cbar_panchor']    )
+                    panchor             = cont2D_params['cbar_panchor'],
+                    
+                    ticks               = cont2D_params['cbar_ticks'],
+                    drawedges           = cont2D_params['cbar_drawedges'],
+                    format              = cont2D_params['cbar_format'])
 
     if cont2D_params['save'] == True:
         fig.savefig(    fname       = cont2D_params['save_name'],
@@ -159,8 +163,8 @@ if __name__ == "__main__":
                         "xlabel_loc":       "center",  #left, right         
                         "xticks":           list(np.linspace(xrange[0],xrange[1],4)),
                         "yticks":           list(np.linspace(yrange[0],yrange[1],8)), 
-
-                        ### COLORBAR ###
+                                            
+                        ### COLORBAR ###: see https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.colorbar.html
                         "cbar_mappable":       matplotlib.cm.ScalarMappable(norm=norm, cmap=cmap),
                         "cbar_orientation":   'horizontal', #vertical #note that orientation overrides panchor
                         "cbar_label":         "Some units",   
@@ -170,6 +174,12 @@ if __name__ == "__main__":
                         "cbar_pad":           0.15, #distance of colorbar from the adjacent plot axis
                         "cbar_panchor":       (0.3,0.2), #TThe anchor point of the colorbar parent axes. If False, the parent axes' anchor will be unchanged. Defaults to (1.0, 0.5) if vertical; (0.5, 0.0) if horizontal.
                         
+                        "cbar_ticks":         None, #or list of custom ticks: list(np.linspace(vmin,vmax,10))
+                        "cbar_drawedges":     False, #draw edges of colorbar
+                        "cbar_label":         "some title", #title on long axis of colorbar
+                        "cbar_format":         '%.1f', #format of tick labels
+
+
                         ### SAVE PROPERTIES ###       
                         "save":             True,
                         "save_name":        "cont2D.pdf",
