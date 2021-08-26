@@ -65,7 +65,7 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
     ax1.set_xlabel( xlabel              = cont2D_params['xlabel'],
                     fontsize            = cont2D_params['xlabel_size'],
                     color               = cont2D_params['label_color'],
-                    loc                 = cont2D_params['label_loc'],
+                    loc                 = cont2D_params['xlabel_loc'],
                     labelpad            = cont2D_params['xlabel_pad'] )
 
     ax1.set_ylabel(cont2D_params['ylabel'])
@@ -87,8 +87,8 @@ def plot_cont2D_analytic(x2d,y2d,v2d,cont2D_params):
                         dpi         = cont2D_params['save_dpi'],
                         quality     = cont2D_params['save_quality'],
                         orientation = cont2D_params['save_orientation'],
-                        bbox_inches = cont2D_params['save_bbox_inches'],
-                        pad_inches  = cont2D_params['save_pad_inches'],
+                        #bbox_inches = cont2D_params['save_bbox_inches'],
+                        #pad_inches  = cont2D_params['save_pad_inches'],
                         format      = cont2D_params['save_format'],
                         )
 
@@ -142,12 +142,14 @@ if __name__ == "__main__":
                         "xlabel_size":       12,
                         "ylabel_size":       12,   
                         "xlabel_pad":       None,     
-                        "ylabel_pad":       None,          
+                        "ylabel_pad":       None,
+                        "xlabel_loc":       "center",  #left, right         
                         "xticks":           list(np.linspace(xrange[0],xrange[1],4)),
                         "yticks":           list(np.linspace(yrange[0],yrange[1],8)), 
 
                         ### SAVE PROPERTIES ###       
                         "save":             True,
+                        "save_name":        "cont2D",
                         "save_dpi":         'figure', #float or 'figure' for same resolution as figure
                         "save_quality":     95, #1-95
                         "save_orientation": 'landscape', #portrait
