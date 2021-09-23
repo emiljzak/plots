@@ -14,7 +14,7 @@ from numpy.lib.arraypad import pad
 from sympy.polys.densebasic import dmp_include
 from sympy.simplify.radsimp import fraction
 
-main_folder = "/Users/zakemil/Nextcloud/projects/plot"
+main_folder = "/home/emil/Desktop/projects/plots"
 
 sys.path.append(main_folder)
 
